@@ -1,8 +1,10 @@
-import React from 'react';
-import { Link, Paper, Box, Grid, Checkbox, FormControlLabel,
+/*global chrome*/
+import React, { useEffect, useState } from 'react';
+import { Paper, Grid, FormControlLabel,
         TextField, CssBaseline, Button, Avatar, Typography } from '@material-ui/core';
 import { LockOutlined } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
+import ReactPlayer from 'react-player'
 
 
 const useStyles = makeStyles((theme) => ({
@@ -55,25 +57,74 @@ const useStyles = makeStyles((theme) => ({
   },
   hostBtn: {
     margin: theme.spacing(3, 0),
+  },
+  videoWrapper: {
+    width: '50vw',
+    height: '50vh',
+    marginTop: '10%',marginLeft: '8%'
+  },
+  video: {
+  },
+  urlInput: {
+    marginTop: '50px',
+    width: '70%'
   }
-}));
+}
+  ));
 
 function AppHome() {
   const classes = useStyles();
+  const [userData, setUserData] = useState();
+  const [url, setUrl] = React.useState('https://www.youtube.com/watch?v=E5ln4uR4TwQ&ab_channel=AldrinAyson');
+  const handleChange = (event) => {
+    setUrl(event.target.value);
+  };
+  const userName = 'nishant'
+
+  // useEffect(() => {
+  //   console.log('userInfo', window.chrome);
+  //   chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
+  //     if (msg.action == 'open_dialog_box') {
+  //       alert("Message recieved!");
+  //     }
+  //   });
+  // }, [])
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7} className={classes.image}>
           <Typography component="h1" variant="h5">
-            Welcome to the home virtual mini hall experience! 
+            Welcome {userName} to the home virtual mini hall experience! 
           </Typography>
+          <TextField
+                className={classes.urlInput}
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                id="url"
+                label="Paste the URL here"
+                name="url"
+                autoComplete="url"
+                autoFocus
+                value={url}
+                onChange={handleChange}
+              />
+          <div className={classes.videoWrapper}>
+            <ReactPlayer url={url}
+            width='100%'
+            height='100%'
+            controls
+            muted 
+            className={classes.video}/>
+          </div>
       </Grid>
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
       <Grid container direction="column" justify="center" alignItems="center">
         <Grid item xs={12} spacing={3} sm={8} className={classes.topRight}>
               <Typography component="h1" variant="h5">
-                Getting started
+                Getting started {userName}
               </Typography>
               <Button variant="contained" color="primary" className={classes.hostBtn}>
                 Host a watch party!
@@ -96,7 +147,6 @@ function AppHome() {
                 label="What's your email?"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
               <TextField
                 variant="outlined"

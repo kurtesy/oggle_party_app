@@ -15,5 +15,9 @@
   },
 
   "permissions": ["activeTab",	"cookies",	"notifications", "unlimitedStorage",
-    "storage",	"webRequest", "declarativeContent", "tabs"]
+    "storage",	"webRequest", "declarativeContent", "tabs", "identity"],
+
+  "background": {
+    "scripts": ["background.js"]
+  }
 }
